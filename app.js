@@ -20,7 +20,7 @@ let runwayPlaneIcon = null;
 
 function drawRunwayAxis(runwayName, phase) {
 
-  // Nettoyage
+  // Nettoyage des anciennes couches
   if (runwayAxisLayer) map.removeLayer(runwayAxisLayer);
   if (runwayAxisArrow) map.removeLayer(runwayAxisArrow);
   if (runwayAxisLabel) map.removeLayer(runwayAxisLabel);
@@ -90,7 +90,8 @@ function drawRunwayAxis(runwayName, phase) {
     })
   }).addTo(map);
 
-} // <-- ✔️ fermeture correcte de la fonction
+} // <-- FIN CORRECTE DE LA FONCTION
+
 
 
   // Coordonnées des seuils (à adapter si tu veux plus précis)
