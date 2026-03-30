@@ -81,9 +81,6 @@ async function loadMetar() {
     const data = await fetchJSON(ENDPOINTS.metar);
     updateMetarUI(data);
     updateStatusPanel("METAR", data);
-    drawRunway(runway);
-    drawCorridor(runway);
-
 }
 
 function updateMetarUI(data) {
@@ -93,6 +90,8 @@ function updateMetarUI(data) {
     if (data.fallback) {
         el.innerText = "METAR indisponible (fallback activé)";
         updateSonometers("UNKNOWN");
+        drawRunway("UNKNOWN");
+        drawCorridor("UNKNOWN");
         return;
     }
 
@@ -100,10 +99,10 @@ function updateMetarUI(data) {
 
     const windDir = data.wind_direction?.value;
     const runway = getRunwayFromWind(windDir);
+
     updateSonometers(runway);
     drawRunway(runway);
     drawCorridor(runway);
-
 }
 
 function getRunwayFromWind(windDir) {
