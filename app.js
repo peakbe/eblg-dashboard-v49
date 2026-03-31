@@ -50,6 +50,7 @@ const SONO_ADDRESSES = {
     "F012": "Rue Barbe d'Or, 4317 Aineffe"
 };
 
+let heatLayer = null;
 let sonometers = {};
 let map;
 let runwayLayer = null;
@@ -318,6 +319,27 @@ function initSonometers(mapInstance) {
     });
 }
 
+function updateHeatmap() {
+    if (heatLayer) {
+        map.removeLayer(heatLayer);
+    }
+
+    const points = Object.values(sonometers).map(s => {
+        let weight = 0.2; // gris
+
+        if (s.marker.options.color === "green") weight = 0.6;
+        if (s.marker.options.color === "red") weight = 1.0;
+
+        return [s.lat, s.lon, weight];
+    });
+
+    heatLayer = L.heatLayer(points, {
+        radius: 35,
+        blur: 25,
+        maxZoom: 12,
+        minOpacity: 0.3
+    }).addTo(map);
+}
 
 function updateSonometers(runway) {
     const color = getSonometerColor(runway);
@@ -355,6 +377,7 @@ function updateSonometersAdvanced(runway, phase) {
 
     green.forEach(id => sonometers[id]?.marker.setStyle({ color: "green", fillColor: "green" }));
     red.forEach(id => sonometers[id]?.marker.setStyle({ color: "red", fillColor: "red" }));
+    updateHeatmap();
 }
 
 function updateSonometerPanel() {
