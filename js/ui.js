@@ -22,3 +22,19 @@ export function initUI() {
         };
     }
 }
+import { heatLayer } from "./sonometers.js";
+
+export function initHeatmapToggle(map) {
+    const btn = document.getElementById("toggle-heatmap");
+    if (!btn) return;
+
+    btn.onclick = () => {
+        if (map.hasLayer(heatLayer)) {
+            map.removeLayer(heatLayer);
+            btn.classList.add("off");
+        } else {
+            map.addLayer(heatLayer);
+            btn.classList.remove("off");
+        }
+    };
+}
