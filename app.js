@@ -16,6 +16,8 @@ import { loadFids } from "./js/fids.js";
 // UI
 import { initUI } from "./js/ui.js";
 
+// SONOMETRES
+import { populateSonometerList } from "./js/sonometers.js";
 
 // ======================================================
 // INITIALISATION
@@ -33,4 +35,7 @@ window.onload = () => {
     loadMetar();
     loadTaf();
     loadFids();
+    populateSonometerList();
+initHeatmapToggle(window.map);
+
 };
