@@ -150,13 +150,23 @@ export function getRunwayFromWind(windDir) {
  * Calcule le crosswind.
  * @returns {{crosswind:number, angleDiff:number}}
  */
+function angleDiff(a, b) {
+    return Math.min(
+        Math.abs(a - b),
+        360 - Math.abs(a - b)
+    );
+}
+
 export function computeCrosswind(windDir, windSpeed, runwayHeading) {
     if (!windDir || !windSpeed || !runwayHeading)
         return { crosswind: 0, angleDiff: 0 };
 
-    const angleDiff = Math.abs(windDir - runwayHeading);
-    const rad = angleDiff * Math.PI / 180;
-    const crosswind = Math.round(Math.abs(windSpeed * Math.sin(rad)));
+    const diff = angleDiff(windDir, runwayHeading);
+    const rad = diff * Math.PI / 180;
 
-    return { crosswind, angleDiff };
+    return {
+        crosswind: Math.round(Math.abs(windSpeed * Math.sin(rad))),
+        angleDiff: diff
+    };
 }
+
